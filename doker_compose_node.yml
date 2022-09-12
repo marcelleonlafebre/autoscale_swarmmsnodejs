@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  node_app:
+    image: nodeweb:latest
+    labels:
+      orbiter: 'true'
+    ports:
+     - 8081:8080
+    volumes:
+     - node-data:/app
+    networks:
+     - default
+    logging:
+      driver: json-file
+    deploy:
+      replicas: 2
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+        limits:
+          cpus: '0.5'
+          memory: 256M
+networks:
+  default:
+    driver: overlay
+volumes:
+  node-data:
+    driver: local
